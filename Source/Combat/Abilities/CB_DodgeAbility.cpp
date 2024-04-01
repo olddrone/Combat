@@ -16,27 +16,25 @@ void UCB_DodgeAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	const FGameplayEventData* TriggerEventData)
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
+	BaseCharacter = CastChecked<ACB_BaseCharacter>(ActorInfo->AvatarActor.Get());
 
-	ACB_BaseCharacter* CBCharacter = CastChecked<ACB_BaseCharacter>(ActorInfo->AvatarActor.Get());
-
+	ImmediateRotateActor();
 	UAbilityTask_PlayMontageAndWait* PlayDodgeTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
-		this, TEXT("PlayDodge"), CBCharacter->GetDodgeMontage());
+		this, NAME_None, DodgeMontage);
 	PlayDodgeTask->OnCompleted.AddDynamic(this, &UCB_DodgeAbility::OnCompleteCallback);
 	PlayDodgeTask->ReadyForActivation();
 }
 
-void UCB_DodgeAbility::EndAbility(const FGameplayAbilitySpecHandle Handle, 
-	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, 
-	bool bReplicateEndAbility, bool bWasCancelled)
-{
-	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
-
-}
-
 void UCB_DodgeAbility::OnCompleteCallback()
 {
-	bool bReplicatedEndAbility = true;
-	bool bWasCancelled = true;
-	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, bReplicatedEndAbility, bWasCancelled);
+	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
+}
 
+void UCB_DodgeAbility::ImmediateRotateActor()
+{
+	if (BaseCharacter->GetLastMovementInputVector().Size() > 0.f)
+	{
+		FRotator Rotate = BaseCharacter->GetLastMovementInputVector().Rotation();
+		BaseCharacter->SetActorRotation(Rotate.Quaternion());
+	}
 }

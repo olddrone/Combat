@@ -26,6 +26,4 @@ public:
 		const FAnimNotifyEventReference& EventReference) override;
 
 private:
-	UPROPERTY()
-	uint8 AttackInput : 1;
 };

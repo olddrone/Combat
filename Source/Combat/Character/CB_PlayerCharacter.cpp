@@ -4,7 +4,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "AbilitySystemComponent.h"
-#include "../State/CB_PlayerState.h"
+#include "State/CB_PlayerState.h"
 
 ACB_PlayerCharacter::ACB_PlayerCharacter()
 {
@@ -28,11 +28,10 @@ void ACB_PlayerCharacter::PossessedBy(AController* NewController)
 		ASC = GASPS->GetAbilitySystemComponent();
 		ASC->InitAbilityActorInfo(GASPS, this);
 
-		for (const auto& StartInputAbility : Abilities)
+		for (const auto& Ability : Abilities)
 		{
-			FGameplayAbilitySpec StartSpec(StartInputAbility.Value);
-			StartSpec.InputID = StartInputAbility.Key;
-			ASC->GiveAbility(StartSpec);
+			FGameplayAbilitySpec Spec(Ability);
+			ASC->GiveAbility(Spec);
 		}
 
 		APlayerController* PlayerController = CastChecked<APlayerController>(NewController);
@@ -59,6 +58,11 @@ void ACB_PlayerCharacter::GASInputPressed(int32 InputId)
 	}
 }
 
+void ACB_PlayerCharacter::InputPressed(const FGameplayTagContainer& GameplayTagContainer)
+{
+	ASC->TryActivateAbilitiesByTag(GameplayTagContainer);
+}
+
 void ACB_PlayerCharacter::GASInputReleased(int32 InputId)
 {
 	FGameplayAbilitySpec* Spec = ASC->FindAbilitySpecFromInputID(InputId);
@@ -68,4 +72,8 @@ void ACB_PlayerCharacter::GASInputReleased(int32 InputId)
 		if (Spec->IsActive())
 			ASC->AbilitySpecInputReleased(*Spec);
 	}
+}
+
+void ACB_PlayerCharacter::InputReleased(const FGameplayTagContainer& GameplayTagContainer)
+{
 }

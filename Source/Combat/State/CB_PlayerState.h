@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "CB_PlayerState.generated.h"
 
+class UAbilitySystemComponent;
 /**
  * 
  */
@@ -19,10 +20,10 @@ public:
 	ACB_PlayerState();
 
 public:
-	FORCEINLINE virtual class UAbilitySystemComponent* GetAbilitySystemComponent() const override
+	FORCEINLINE virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override
 	{ return ASC; }
 
 private:
 	UPROPERTY(EditAnywhere)
-	TObjectPtr<class UAbilitySystemComponent> ASC;
+	TObjectPtr<UAbilitySystemComponent> ASC;
 };

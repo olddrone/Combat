@@ -8,8 +8,9 @@ public class Combat : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-
-        //PublicIncludePaths.AddRange(new string[] { "Combat" });
+		PrivateIncludePaths.AddRange(new string[] { 
+			"Combat" 
+		});
 
         PublicDependencyModuleNames.AddRange(new string[] { 
 			"Core", 

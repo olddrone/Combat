@@ -33,7 +33,5 @@ void UCB_JumpAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 
 void UCB_JumpAbility::OnLandedCallback()
 {
-	bool bReplicatedEndAbility = true;
-	bool bWasCancelled = false;
-	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, bReplicatedEndAbility, bWasCancelled);
+	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
 }

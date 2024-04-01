@@ -13,5 +13,8 @@ UCLASS()
 class COMBAT_API ACB_EnemyCharacter : public ACB_BaseCharacter
 {
 	GENERATED_BODY()
+public:
+	ACB_EnemyCharacter();
+
 	
 };

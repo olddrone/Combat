@@ -1,12 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CB_PlayerController.h"
-#include "../Data/CB_PDA_Input.h"
+#include "Data/CB_PDA_Input.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "InputActionValue.h"
 #include "GameFramework/Character.h"
-#include "../Character/CB_PlayerCharacter.h"
+#include "Character/CB_PlayerCharacter.h"
+
 
 void ACB_PlayerController::BeginPlay()
 {
@@ -29,10 +30,9 @@ void ACB_PlayerController::SetupInputComponent()
 		EIC->BindAction(InputData->MoveAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::Move);
 		EIC->BindAction(InputData->LookAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::Look);
 		
-		EIC->BindAction(InputData->JumpAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::GASInputPressed<0>);
-		EIC->BindAction(InputData->JumpAction, ETriggerEvent::Completed, this, &ACB_PlayerController::GASInputReleased<0>);
-		EIC->BindAction(InputData->AttackAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::GASInputPressed<1>);
-		EIC->BindAction(InputData->DodgeAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::GASInputPressed<2>);
+		EIC->BindAction(InputData->JumpAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::Jump);
+		EIC->BindAction(InputData->AttackAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::Attack);
+		EIC->BindAction(InputData->DodgeAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::Dodge);
 
 	}
 }
@@ -58,14 +58,18 @@ void ACB_PlayerController::Look(const FInputActionValue& Value)
 	GetCharacter()->AddControllerPitchInput(LookAxisVector.Y);
 }
 
-void ACB_PlayerController::GASInputPressed(uint32 Idx)
+void ACB_PlayerController::InputPressed(const FGameplayTag& Tag)
 {
+	FGameplayTagContainer Container;
+	Container.AddTag(Tag);
 	ACB_PlayerCharacter* PlayerCharacter = Cast<ACB_PlayerCharacter>(GetCharacter());
-	PlayerCharacter->GASInputPressed(Idx);
+	PlayerCharacter->InputPressed(Container);
 }
 
-void ACB_PlayerController::GASInputReleased(uint32 Idx)
+void ACB_PlayerController::InputReleased(const FGameplayTag& Tag)
 {
+	FGameplayTagContainer Container;
+	Container.AddTag(Tag);
 	ACB_PlayerCharacter* PlayerCharacter = Cast<ACB_PlayerCharacter>(GetCharacter());
-	PlayerCharacter->GASInputReleased(Idx);
+	PlayerCharacter->InputReleased(Container);
 }

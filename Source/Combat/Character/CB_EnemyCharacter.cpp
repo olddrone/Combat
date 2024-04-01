@@ -3,3 +3,6 @@
 
 #include "CB_EnemyCharacter.h"
 
+ACB_EnemyCharacter::ACB_EnemyCharacter()
+{
+}

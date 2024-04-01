@@ -4,7 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "GameplayTagContainer.h"
+#include "Tags/StateTag.h"
 #include "CB_PlayerController.generated.h"
+
+
 
 struct FInputActionValue;
 class UCB_PDA_Input;
@@ -24,14 +28,12 @@ protected:
 private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
+	void Jump() { InputPressed(STATE_JUMP); }
+	void Dodge() { InputPressed(STATE_DODGE); }
+	void Attack() { InputPressed(STATE_ATTACK_LIGHT); }
 
-	void GASInputPressed(uint32 Idx);
-	template<int32 Idx>
-	void GASInputPressed() { GASInputPressed(Idx); }
-	
-	void GASInputReleased(uint32 Idx);
-	template<int32 Idx>
-	void GASInputReleased() { GASInputReleased(Idx); }
+	void InputPressed(const FGameplayTag& Tag);
+	void InputReleased(const FGameplayTag& Tag);
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Data")
