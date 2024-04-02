@@ -23,12 +23,8 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 	
 	UFUNCTION()
-	void GASInputPressed(int32 InputId);
-	UFUNCTION()
 	void InputPressed(const FGameplayTagContainer& GameplayTagContainer);
 
-	UFUNCTION()
-	void GASInputReleased(int32 InputId);
 	UFUNCTION()
 	void InputReleased(const FGameplayTagContainer& GameplayTagContainer);
 
@@ -42,5 +38,5 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCameraComponent> CameraComponent;
 
-	
+
 };

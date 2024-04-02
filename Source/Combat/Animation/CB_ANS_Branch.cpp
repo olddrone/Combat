@@ -15,3 +15,4 @@ void UCB_ANS_Branch::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceB
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
 		MeshComp->GetOwner(), STATE_ATTACK_LIGHT_NEXT, Payload);
 }
+

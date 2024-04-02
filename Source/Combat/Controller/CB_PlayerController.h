@@ -5,10 +5,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "GameplayTagContainer.h"
-#include "Tags/StateTag.h"
+#include "../Tags/StateTag.h"
 #include "CB_PlayerController.generated.h"
 
-
+DECLARE_DELEGATE_OneParam(FLockChangeDelegate, float);
 
 struct FInputActionValue;
 class UCB_PDA_Input;
@@ -28,14 +28,16 @@ protected:
 private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
-	void Jump() { InputPressed(STATE_JUMP); }
-	void Dodge() { InputPressed(STATE_DODGE); }
-	void Attack() { InputPressed(STATE_ATTACK_LIGHT); }
+	void LockOn();
 
-	void InputPressed(const FGameplayTag& Tag);
-	void InputReleased(const FGameplayTag& Tag);
+	void InputPressed(FGameplayTag Tag);
+	void InputReleased(FGameplayTag Tag);
+
+public:
+	FLockChangeDelegate LockChangeDelegate;
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Data")
 	TObjectPtr<UCB_PDA_Input> InputData = nullptr;
+
 };

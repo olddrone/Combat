@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CB_PlayerController.h"
-#include "Data/CB_PDA_Input.h"
+#include "../Data/CB_PDA_Input.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "InputActionValue.h"
 #include "GameFramework/Character.h"
-#include "Character/CB_PlayerCharacter.h"
+#include "../Character/CB_PlayerCharacter.h"
 
 
 void ACB_PlayerController::BeginPlay()
@@ -30,9 +30,14 @@ void ACB_PlayerController::SetupInputComponent()
 		EIC->BindAction(InputData->MoveAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::Move);
 		EIC->BindAction(InputData->LookAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::Look);
 		
-		EIC->BindAction(InputData->JumpAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::Jump);
-		EIC->BindAction(InputData->AttackAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::Attack);
-		EIC->BindAction(InputData->DodgeAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::Dodge);
+		EIC->BindAction(InputData->JumpAction, ETriggerEvent::Triggered, this,
+			&ACB_PlayerController::InputPressed, STATE_JUMP);
+		EIC->BindAction(InputData->AttackAction, ETriggerEvent::Triggered, this,
+			&ACB_PlayerController::InputPressed, STATE_ATTACK_LIGHT);
+		EIC->BindAction(InputData->DodgeAction, ETriggerEvent::Triggered, this,
+			&ACB_PlayerController::InputPressed, STATE_DODGE);
+
+		EIC->BindAction(InputData->LockOnAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::LockOn);
 
 	}
 }
@@ -56,9 +61,17 @@ void ACB_PlayerController::Look(const FInputActionValue& Value)
 
 	GetCharacter()->AddControllerYawInput(LookAxisVector.X);
 	GetCharacter()->AddControllerPitchInput(LookAxisVector.Y);
+
+	LockChangeDelegate.Execute(LookAxisVector.X);
 }
 
-void ACB_PlayerController::InputPressed(const FGameplayTag& Tag)
+void ACB_PlayerController::LockOn()
+{
+	ACB_PlayerCharacter* PlayerCharacter = Cast<ACB_PlayerCharacter>(GetCharacter());
+	PlayerCharacter->LockOn();
+}
+
+void ACB_PlayerController::InputPressed(FGameplayTag Tag)
 {
 	FGameplayTagContainer Container;
 	Container.AddTag(Tag);
@@ -66,8 +79,9 @@ void ACB_PlayerController::InputPressed(const FGameplayTag& Tag)
 	PlayerCharacter->InputPressed(Container);
 }
 
-void ACB_PlayerController::InputReleased(const FGameplayTag& Tag)
+void ACB_PlayerController::InputReleased(FGameplayTag Tag)
 {
+	// 추후 가드에서 사용할듯?
 	FGameplayTagContainer Container;
 	Container.AddTag(Tag);
 	ACB_PlayerCharacter* PlayerCharacter = Cast<ACB_PlayerCharacter>(GetCharacter());
