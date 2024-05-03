@@ -8,6 +8,15 @@
 #include "CB_EnemyCharacter.generated.h"
 
 class UGameplayEffect;
+class UBehaviorTree;
+class ACB_AIController;
+
+UENUM(BlueprintType)
+enum class EBossType : uint8
+{
+	Aggressive,
+	Defensive,
+};
 
 UCLASS()
 class COMBAT_API ACB_EnemyCharacter : public ACB_BaseCharacter
@@ -34,4 +43,12 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float Level = 1.f;
 
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UBehaviorTree> BehaviorTree;
+
+	UPROPERTY()
+	TObjectPtr<ACB_AIController> AIController;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	EBossType BossType = EBossType::Aggressive;
 };

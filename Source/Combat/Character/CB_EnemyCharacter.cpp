@@ -3,11 +3,15 @@
 #include "CB_EnemyCharacter.h"
 #include "AbilitySystemComponent.h"
 #include "Attribute/CB_CharacterAttributeSet.h"
+#include "AI/CB_AIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "BehaviorTree/BehaviorTree.h"
 
 ACB_EnemyCharacter::ACB_EnemyCharacter()
 {
 	ASC = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("ASC"));
 	AttributeSet = CreateDefaultSubobject<UCB_CharacterAttributeSet>(TEXT("AttributeSet"));
+
 }
 
 void ACB_EnemyCharacter::SetOutLine(bool bIsShow)
@@ -33,6 +37,10 @@ void ACB_EnemyCharacter::PossessedBy(AController* NewController)
 		ASC->GiveAbility(Spec);
 	}
 
+	AIController = Cast<ACB_AIController>(NewController);
+	AIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
+	AIController->GetBlackboardComponent()->SetValueAsBool(FName("Aggressive"), BossType == EBossType::Aggressive);
+	AIController->RunBehaviorTree(BehaviorTree);
 }
 
 void ACB_EnemyCharacter::BeginPlay()

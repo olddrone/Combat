@@ -16,6 +16,12 @@ class UCB_LockOnComponent;
 class ACB_BaseWeapon;
 class UCB_CharacterAttributeSet;
 
+namespace WalkSpeed
+{
+	const float Walk = 300.f;
+	const float Run = 450.f;
+};
+
 UCLASS()
 class COMBAT_API ACB_BaseCharacter : public ACharacter, public IAbilitySystemInterface, public ICB_CombatInterface
 {
@@ -34,6 +40,8 @@ public:
 
 	virtual FVector GetSocketLocation(const FName SocketName) override;
 	virtual FVector GetWeaponSocketLocation(const FName SocketName) override;
+
+	void DestroyAll();
 
 public:
 	FORCEINLINE virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return ASC; }
@@ -68,7 +76,7 @@ protected:
 
 public:
 	FORCEINLINE bool GetIsGuard() const { return bIsGuard; }
-	FORCEINLINE void SetIsGuard(const bool IsGaurd) { bIsGuard = IsGaurd; }
+	void SetIsGuard(const bool IsGaurd);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool bIsGuard = false;

@@ -20,7 +20,7 @@ ACB_BaseCharacter::ACB_BaseCharacter()
 
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
-	GetCharacterMovement()->MaxWalkSpeed = 450.f;
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed::Run;
 
 	LockOnComponent = CreateDefaultSubobject<UCB_LockOnComponent>(TEXT("LockOnComponent"));
 }
@@ -34,6 +34,12 @@ void ACB_BaseCharacter::BeginPlay()
 		Weapon = GetWorld()->SpawnActor<ACB_BaseWeapon>(WeaponClass);
 		Weapon->Equip(GetMesh(), FName("HolsterSocket"), this, this);
 	}
+}
+
+void ACB_BaseCharacter::SetIsGuard(const bool IsGaurd)
+{
+	bIsGuard = IsGaurd;
+	GetCharacterMovement()->MaxWalkSpeed = (IsGaurd) ? WalkSpeed::Walk : WalkSpeed::Run;
 }
 
 
@@ -69,4 +75,11 @@ FVector ACB_BaseCharacter::GetSocketLocation(const FName SocketName)
 FVector ACB_BaseCharacter::GetWeaponSocketLocation(const FName SocketName)
 {
 	return Weapon->GetWeaponMesh()->GetSocketLocation(SocketName);
+}
+
+void ACB_BaseCharacter::DestroyAll()
+{
+	if (GetWeapon())
+		GetWeapon()->Destroy();
+	Destroy();
 }

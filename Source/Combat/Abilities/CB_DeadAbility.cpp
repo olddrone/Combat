@@ -34,6 +34,7 @@ void UCB_DeadAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 
 void UCB_DeadAbility::OnCompleteCallback()
 {
+	BaseCharacter->DestroyAll();
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
 }
 

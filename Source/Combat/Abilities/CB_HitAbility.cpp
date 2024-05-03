@@ -77,5 +77,6 @@ float UCB_HitAbility::CheckTheta(const FGameplayAbilityTargetDataHandle& TargetD
 	const FVector ToHit = (ImpactLowered - Start).GetSafeNormal();
 
 	const double CosTheta = FVector::DotProduct(Forward, ToHit);
+	UE_LOG(LogTemp, Warning, TEXT("%f"), UKismetMathLibrary::DegAcos(CosTheta));
 	return UKismetMathLibrary::DegAcos(CosTheta);
 }

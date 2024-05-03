@@ -16,6 +16,12 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOutOfHealthDelegate);
 
+namespace SPEED
+{
+	const float WALK = 200.f;
+	const float RUN = 450.f;
+};
+
 UCLASS()
 class COMBAT_API UCB_CharacterAttributeSet : public UAttributeSet
 {
@@ -49,6 +55,7 @@ private:
 
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData StaminaRegenRate = .5f;
+
 
 public:
 	mutable FOutOfHealthDelegate OnOutOfHealth;
