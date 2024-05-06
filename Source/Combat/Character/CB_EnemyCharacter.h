@@ -10,6 +10,7 @@
 class UGameplayEffect;
 class UBehaviorTree;
 class ACB_AIController;
+class UCB_UserWidget;
 
 UENUM(BlueprintType)
 enum class EBossType : uint8
@@ -32,6 +33,11 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnMaxHealtChangedSignature OnMaxHealthChanged;
+	
+	virtual void DestroyAll() override;
+
+public:
+	FORCEINLINE UCB_UserWidget* GetOverlay() const { return BossOverlay; }
 
 protected:
 	virtual void BeginPlay() override;
@@ -51,4 +57,10 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	EBossType BossType = EBossType::Aggressive;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UCB_UserWidget> BossOverlayClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<UCB_UserWidget> BossOverlay;
 };

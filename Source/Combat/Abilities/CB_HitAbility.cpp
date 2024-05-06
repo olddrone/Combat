@@ -51,7 +51,7 @@ void UCB_HitAbility::PlayGameplayCue(const FGameplayEventData* TriggerEventData)
 		CueContextHandle.AddHitResult(HitResult);
 		FGameplayCueParameters CueParam;
 		CueParam.EffectContext = CueContextHandle;
-
+		// Damage
 		BaseCharacter->GetAbilitySystemComponent()->ExecuteGameplayCue(GAMEPLAYCUE_ATTACKHIT, CueParam);
 	}
 }
@@ -77,6 +77,13 @@ float UCB_HitAbility::CheckTheta(const FGameplayAbilityTargetDataHandle& TargetD
 	const FVector ToHit = (ImpactLowered - Start).GetSafeNormal();
 
 	const double CosTheta = FVector::DotProduct(Forward, ToHit);
-	UE_LOG(LogTemp, Warning, TEXT("%f"), UKismetMathLibrary::DegAcos(CosTheta));
 	return UKismetMathLibrary::DegAcos(CosTheta);
+}
+
+FName UCB_HitAbility::CheckSectionName(const float Theta)
+{
+	FName Section = (0 <= Theta && Theta <= 110.f) ? FName("Fwd") : FName("Bwd");
+	if (Section == "Fwd" && BaseCharacter->HasGameplayTag(STATE_GUARD))
+		Section = FName("BlockHit");
+	return Section;
 }

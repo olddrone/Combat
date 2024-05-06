@@ -26,7 +26,8 @@ UCLASS()
 class COMBAT_API UCB_CharacterAttributeSet : public UAttributeSet
 {
 	GENERATED_BODY()
-	friend class UCB_AttackDamageEffect;
+	friend class UCB_DamageCalculation;
+	friend class UCB_AttackDamage;
 public:
 	UCB_CharacterAttributeSet();
 
@@ -55,7 +56,6 @@ private:
 
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData StaminaRegenRate = .5f;
-
 
 public:
 	mutable FOutOfHealthDelegate OnOutOfHealth;

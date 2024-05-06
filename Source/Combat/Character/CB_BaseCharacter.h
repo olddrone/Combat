@@ -41,13 +41,13 @@ public:
 	virtual FVector GetSocketLocation(const FName SocketName) override;
 	virtual FVector GetWeaponSocketLocation(const FName SocketName) override;
 
-	void DestroyAll();
+	virtual void DestroyAll();
 
 public:
 	FORCEINLINE virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return ASC; }
 	FORCEINLINE ACB_BaseWeapon* GetWeapon() const { return Weapon; }
-	FORCEINLINE void AddGameplayTag(FGameplayTag Tag) { ASC->AddLooseGameplayTag(Tag); }
-	FORCEINLINE void RemoveGameplayTag(FGameplayTag Tag) { ASC->RemoveLooseGameplayTag(Tag); }
+	FORCEINLINE void AddUniqueGameplayTag(FGameplayTag Tag);
+	FORCEINLINE void RemoveUniqueGameplayTag(FGameplayTag Tag);
 
 protected:
 	virtual void BeginPlay() override;
