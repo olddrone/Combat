@@ -76,9 +76,13 @@ void ACB_PlayerCharacter::TrailStart(FGameplayTag Tag)
 void ACB_PlayerCharacter::SetWarpTarget()
 {
 	Super::SetWarpTarget();
-	if (LockOnComponent->IsLocked())
+	if (IsLocked())
 	{
 		FTransform Transform = LockOnComponent->GetLockedOnTargetActor()->GetActorTransform();
 		MotionWarpingComponent->AddOrUpdateWarpTargetFromTransform(TEXT("Target"), Transform);
+	}
+	else
+	{
+		MotionWarpingComponent->RemoveWarpTarget(TEXT("Target"));
 	}
 }
