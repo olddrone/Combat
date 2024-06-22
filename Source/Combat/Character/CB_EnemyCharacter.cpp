@@ -92,12 +92,11 @@ void ACB_EnemyCharacter::BeginPlay()
 		OnHealthChanged.Broadcast(AS->GetHealth());
 		OnMaxHealthChanged.Broadcast(AS->GetMaxHealth());
 	}
-
-	/*
+	
 	FGameplayTagContainer Container;
 	Container.AddTag(STATE_EQUIPMENT);
 	ASC->TryActivateAbilitiesByTag(Container);
-	*/
+	
 
 	if (bIsOverlayActive)
 	{
