@@ -19,5 +19,4 @@ Gameplay Ability System을 활용해 전투 시스템 개발
 <img src="https://github.com/olddrone/Combat/assets/45356392/7c3979e1-f181-454e-b7f1-2bbf85d7098e"/>
 <img src="https://github.com/olddrone/Combat/assets/45356392/b293ddc5-905f-4bc9-aeec-1c9640738e76"/>
 <img src="https://github.com/olddrone/Combat/assets/45356392/0eb26306-9f18-4278-b0f0-2cd936fc8e57"/>
-<img src="https://github.com/olddrone/Combat/assets/45356392/d67ce496-2a67-4fc5-b93f-ed08d06e042d
-"/>
+<img src="https://github.com/olddrone/Combat/assets/45356392/d67ce496-2a67-4fc5-b93f-ed08d06e042d"/>
