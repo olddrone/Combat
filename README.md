@@ -1,6 +1,8 @@
 # Combat
+- UNSEEN 프로젝트
 - 엔진 버전 : UE 5.3.2
 - 장르 : 3인칭 액션 싱글 플레이
+- 개발 기간 : '24.03.25 ~ '24.06.27
 - 키워드 : 소울라이크, Gameplay Ability System, 전투 시스템
 - 영상 링크 : https://youtu.be/JKoSaId1Kno  
 
