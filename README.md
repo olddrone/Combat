@@ -3,7 +3,6 @@
 - 장르 : 3인칭 액션 싱글 플레이
 - 키워드 : 소울라이크, Gameplay Ability System, 전투 시스템
 - 영상 링크 : https://youtu.be/JKoSaId1Kno  
-- 프로젝트 패키지(진짜 최종) : https://drive.google.com/file/d/16F8JneXcPeHLIe1onDUQGLAY3drUC52A/view?usp=sharing
 
 # 개요
 <img src="https://github.com/olddrone/Combat/assets/45356392/85bcdb8d-ba33-4ced-b419-ea12bf58477d"/>
